@@ -4,7 +4,7 @@ class Search::Resource
 
   def initialize(filename)
     @resource = read_and_parse_json(file: filename)
-    @index = Search::Index.new(db: @resource)
+    @index = Search::Index.new(db: @resource).fetch
   end
 
   private

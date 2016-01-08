@@ -24,8 +24,18 @@ RSpec.describe Search::Resource do
   end
 
   describe '#find' do
-    it '' do
+    it 'simple query' do
       expect(subject.find('Lisp Common')).to include subject.fetch 26
+    end
+
+    it 'simple query with thrash symbols' do
+      expect(subject.find(' Lisp! Common !!,....')).to include subject.fetch 26
+    end
+
+    it 'except query with -' do
+    end
+
+    it 'find full "request string"' do
     end
   end
 

@@ -23,9 +23,9 @@ class Search::Index
   def fetch_names(str)
     return [] unless str
     # "John George Kemeny, Thomas Eugene Kurtz"
-    list = str.split(/\s*\,\s*/).map{ |item| item.downcase }
+    list = str.split(/\s*,\s*/).map(&:downcase)
     # ["john george kemeny", "thomas eugene kurtz"]
-    list + list.map{ |item| item.split(/\s+/) }.first
+    list + list.map { |item| item.split(/\s+/) }.first
     # ["john george kemeny", "thomas eugene kurtz", "john", "george", "kemeny"]
   end
 end
