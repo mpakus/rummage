@@ -1,54 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe Search::Index do
-  let(:index) { Search::Index.new(db: input).fetch }
+  let(:index) { Search::Index.new(db: load_data).fetch }
 
   it 'check name index' do
-    expect(index['basic']).to include 2
-    expect(index['foxpro']).to include 3
-    expect(index['visual']).to eq Set.new [2, 3]
+    expect(index['basic']).to include 12 # BASIC
+    expect(index['basic']).to include 88 # Visual Basic
+    expect(index['visual']).to eq Set.new [88, 89]
   end
 
   it 'check type field' do
-    expect(index['compiled']).to eq Set.new [0, 2, 3, 4, 5]
-    expect(index['procedural']).to eq Set.new [0, 2, 3, 4]
+    expect(index['compiled']).to include 88
+    expect(index['compiled']).to include 89
+    expect(index['compiled']).to include 91
+
+    expect(index['procedural']).to include 91
+    expect(index['procedural']).to include 94
+    expect(index['procedural']).to include 20
   end
 
   it 'check designed by field' do
-    expect(index['ibm']).to include 0
-    expect(index['microsoft']).to eq Set.new [2, 3]
+    expect(index['ibm']).to include 74
+    expect(index['microsoft']).to include 87
+    expect(index['microsoft']).to include 88
+    expect(index['microsoft']).to include 89
   end
 
-  def input
-    [{
-      'Name' => 'RPG',
-      'Type' => 'Compiled, Procedural',
-      'Designed by' => 'IBM'
-    },
-    {
-      'Name' => 'Ruby',
-      'Type' => 'Imperative, Interpreted, Metaprogramming, Object-oriented class-based, Reflective, Scripting, Interactive mode',
-      'Designed by' => 'Yukihiro Matsumoto'
-    },
-    {
-       'Name' => 'Visual Basic',
-       'Type' => 'Compiled, Procedural',
-       'Designed by' => 'Microsoft'
-     },
-     {
-       'Name' => 'Visual FoxPro',
-       'Type' => 'Compiled, Data-oriented, Object-oriented class-based, Procedural',
-       'Designed by' => 'Microsoft'
-     },
-     {
-       'Name' => 'BASIC',
-       'Type' => 'Imperative, Compiled, Procedural, Interactive mode, Interpreted',
-       'Designed by' => 'John George Kemeny, Thomas Eugene Kurtz'
-     },
-     {
-       'Name' => 'Haskell',
-       'Type' => 'Compiled, Functional, Metaprogramming, Interpreted, Interactive mode',
-       'Designed by' => 'Simon Peyton Jones, Lennart Augustsson, Dave Barton, Brian Boutel, Warren Burton, Joseph Fasel, Kevin Hammond, Ralf Hinze, Paul Hudak, John Hughes, Thomas Johnsson, Mark Jones, John Launchbury, Erik Meijer, John Peterson, Alastair Reid, Colin Runciman, Philip Wadler'
-     }]
+  private
+
+  def load_data
+    JSON.parse File.read Rails.root.join('spec', 'fixtures', 'data.json')
   end
 end

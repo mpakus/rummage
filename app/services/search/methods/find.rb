@@ -3,8 +3,8 @@ module Search::Methods::Find
     @words, @antiwords = parse_query(query)
     found_ids = search(@words)
     anti_ids  = search(@antiwords)
-    ids = found_ids - anti_ids
-    fetch_resources(ids)
+    found_ids = found_ids - anti_ids if anti_ids && found_ids
+    fetch_resources(found_ids)
   end
 
   private
@@ -35,9 +35,9 @@ module Search::Methods::Find
     results = Set.new
     words.each do |word|
       ids = @index[word]
-      results.merge(ids) if ids
+      results.add(ids) if ids
     end
-    results
+    results.reduce(&:&) # leave only confluence documents
   end
 
   def fetch_resources(ids)

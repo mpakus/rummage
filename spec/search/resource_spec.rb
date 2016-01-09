@@ -24,6 +24,32 @@ RSpec.describe Search::Resource do
   end
 
   describe '#find' do
+    it 'support exact matches' do
+      results = subject.find('Interpreted "Thomas Eugene"')
+      expect(results).to include subject.fetch 12 # basic
+      expect(results).to_not include subject.fetch 48 # but not haskell
+    end
+
+    it 'match in different fields' do
+      results = subject.find('Scripting Microsoft')
+      results.each do |language|
+        expect(language['Designed by']).to include 'Microsoft'
+      end
+    end
+
+    it 'support for negative searches' do
+      results = subject.find('john -array')
+      # include
+      expect(results).to include subject.fetch 12 # BASIC
+      expect(results).to include subject.fetch 48 # Haskell
+      expect(results).to include subject.fetch 60 # Lisp
+      expect(results).to include subject.fetch 78 # S-Lang
+      # but not include
+      expect(results).to_not include subject.fetch 19 # Chapel
+      expect(results).to_not include subject.fetch 42 # Fortran
+      expect(results).to_not include subject.fetch 77 # S
+    end
+
     it 'simple query' do
       expect(subject.find('Lisp Common')).to include subject.fetch 26
     end
@@ -31,16 +57,10 @@ RSpec.describe Search::Resource do
     it 'simple query with thrash symbols' do
       expect(subject.find(' Lisp! Common !!,....')).to include subject.fetch 26
     end
-
-    it 'except query with -' do
-    end
-
-    it 'find full "request string"' do
-    end
   end
 
   describe '#fetch' do
-    it 'returns one record' do
+    it 'return one record' do
       language = subject.fetch 22
       expect(language['Name']).to eq 'Clojure'
     end
