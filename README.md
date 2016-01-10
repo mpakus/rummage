@@ -4,4 +4,14 @@ Rummage
 
 [![Circle CI](https://circleci.com/gh/mpakus/rummage/tree/master.svg?style=svg)](https://circleci.com/gh/mpakus/rummage/tree/master)
 
-* language search engine
+* search engine
+
+Install & run
+----
+> bundle install
+> rails s
+
+type `http://localhost:3000/` in your browser and start to search!
+
+
+

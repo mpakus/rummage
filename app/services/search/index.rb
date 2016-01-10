@@ -45,9 +45,9 @@ class Search::Index
   end
 
   def make_combi(set, list, i)
-    return if list.count <= 1 || i >= list.count-1
+    return if list.count <= 1 || i >= list.count - 1
     set << list[0..i].join(' ')
-    set << make_combi(set, list, i+1)
+    set << make_combi(set, list, i + 1)
     set.flatten
   end
 end

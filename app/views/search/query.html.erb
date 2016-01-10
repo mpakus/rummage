@@ -1,0 +1,13 @@
+<h1>Search</h1>
+
+<%= render 'form' %>
+
+<ul>
+  <% @results.each do |lang| %>
+    <li>
+      <h4><%= lang['Name'] %></h4>
+      <p>Type: <%= lang['Type'] %></p>
+      <small>Designed by: <%= lang['Designed by'] %></small>
+    </li>
+  <% end if @results %>
+</ul>

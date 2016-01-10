@@ -3,7 +3,7 @@ module Search::Methods::Find
     @words, @antiwords = parse_query(query)
     found_ids = search(@words)
     anti_ids  = search(@antiwords)
-    found_ids = found_ids - anti_ids if anti_ids && found_ids
+    found_ids -= anti_ids if anti_ids && found_ids
     fetch_resources(found_ids)
   end
 
@@ -23,7 +23,7 @@ module Search::Methods::Find
 
   def extract_anti_words(words)
     antiwords, words = words.partition { |word| antiword?(word) }
-    antiwords = antiwords.map { |s| s.delete('-') } # remove thrash symbols
+    antiwords = antiwords.map { |s| s.delete('-') } # remove -symbols
     [words, antiwords]
   end
 
@@ -37,11 +37,12 @@ module Search::Methods::Find
       ids = @index[word]
       results.add(ids) if ids
     end
-    results.reduce(&:&) # leave only confluence documents
+    results.reduce(&:&) # Search match precision
   end
 
   def fetch_resources(ids)
     results = Set.new
+    return results unless ids
     ids.each { |id| results.add fetch(id) }
     results
   end

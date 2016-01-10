@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-lg-12">
+    <%= form_tag search_query_path, method: :get, id: 'search_form', class: 'form-inline', 'data-url': search_query_path(format: :json) do %>
+        <div class="form-group">
+          <input name="q" type="text" class="form-control search-query" id="q" placeholder="Search" value="<%= @q %>"/>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i> Search</button>
+        </div>
+    <% end %>
+  </div>
+</div>
+<br/>

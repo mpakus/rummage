@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bootstrap-sass'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'puma'

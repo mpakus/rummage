@@ -1,2 +1,9 @@
 //= require_tree .
 //= require_self
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.search-query{
+  min-width: 600px;
+}
