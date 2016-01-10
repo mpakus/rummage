@@ -9,9 +9,16 @@ Rummage
 Install & run
 ----
 > bundle install
+
 > rails s
 
 type `http://localhost:3000/` in your browser and start to search!
 
+Tests
+---
+> rspec
 
+Rubocop
+--- 
+> rubocop -a
 
